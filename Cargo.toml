@@ -3,8 +3,12 @@ name = "cargo-recon"
 version = "0.1.0"
 edition = "2024"
 authors = ["Jack McPherson <jack@jmcph4.dev>"]
+description = "Enumerate viable fuzzing targets in Rust code"
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/jmcph4/cargo-recon"
+keywords = ["cli", "fuzzing", "security", "static-analysis", "rust"]
+categories = ["command-line-utilities", "development-tools::testing", "development-tools::debugging", "development-tools::cargo-plugins", "security"]
 
 [dependencies]
 clap = { version = "4.5.34", features = ["derive"] }
