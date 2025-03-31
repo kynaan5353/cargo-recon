@@ -1,0 +1,13 @@
+[package]
+name = "cargo-recon"
+version = "0.1.0"
+edition = "2024"
+authors = ["Jack McPherson <jack@jmcph4.dev>"]
+license = "MIT"
+readme = "README.md"
+
+[dependencies]
+
+[[bin]]
+name = "cargo-recon"
+path = "src/main.rs"
