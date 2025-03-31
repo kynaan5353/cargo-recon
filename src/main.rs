@@ -6,42 +6,51 @@ use eyre::eyre;
 use search::search_file;
 use walkdir::WalkDir;
 
+use crate::cli::Commands;
+
 pub mod cli;
 pub mod search;
 
 fn main() -> eyre::Result<()> {
     let opts = Opts::parse();
 
-    let mut targets = Vec::new();
+    match opts.command {
+        Commands::List { path } => {
+            let mut targets = Vec::new();
 
-    let path = match opts.path {
-        Some(p) => p,
-        None => {
-            let mut p = PathBuf::new();
-            p.push(".");
-            p
-        }
-    };
+            let path = match path {
+                Some(p) => p,
+                None => {
+                    let mut p = PathBuf::new();
+                    p.push(".");
+                    p
+                }
+            };
 
-    if path.is_dir() {
-        for entry in WalkDir::new(&path).into_iter().filter_map(|e| e.ok()) {
-            if entry.file_type().is_file()
-                && entry.path().extension().and_then(|s| s.to_str())
-                    == Some("rs")
-            {
-                targets.extend(search_file(entry.path()));
+            if path.is_dir() {
+                for entry in
+                    WalkDir::new(&path).into_iter().filter_map(|e| e.ok())
+                {
+                    if entry.file_type().is_file()
+                        && entry.path().extension().and_then(|s| s.to_str())
+                            == Some("rs")
+                    {
+                        targets.extend(search_file(entry.path()));
+                    }
+                }
+            } else if path.is_file() {
+                targets.extend(search_file(&path));
+            } else {
+                return Err(eyre!("Not file nor directory"));
             }
-        }
-    } else if path.is_file() {
-        targets.extend(search_file(&path));
-    } else {
-        return Err(eyre!("Not file nor directory"));
-    }
 
-    targets
-        .iter()
-        .flatten()
-        .for_each(|target| println!("{target}"));
+            targets
+                .iter()
+                .flatten()
+                .for_each(|target| println!("{target}"));
+        }
+        _ => unimplemented!(),
+    }
 
     Ok(())
 }
