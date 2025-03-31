@@ -7,6 +7,11 @@ license = "MIT"
 readme = "README.md"
 
 [dependencies]
+clap = { version = "4.5.34", features = ["derive"] }
+eyre = "0.6.12"
+proc-macro2 = { version = "1.0.94", features = ["span-locations"] }
+syn = { version = "2.0.100", features = ["full", "visit"] }
+walkdir = "2.5.0"
 
 [[bin]]
 name = "cargo-recon"
