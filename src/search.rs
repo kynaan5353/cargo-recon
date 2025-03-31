@@ -1,5 +1,5 @@
 use std::{
-    fs,
+    fmt, fs,
     path::{Path, PathBuf},
 };
 
@@ -10,6 +10,18 @@ pub struct Target {
     pub name: String,
     pub file_path: PathBuf,
     pub line: usize,
+}
+
+impl fmt::Display for Target {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "{}:{}: {}",
+            self.file_path.display(),
+            self.line,
+            self.name
+        )
+    }
 }
 
 pub struct FunctionFinder {

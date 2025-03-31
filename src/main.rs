@@ -38,14 +38,10 @@ fn main() -> eyre::Result<()> {
         return Err(eyre!("Not file nor directory"));
     }
 
-    targets.iter().flatten().for_each(|target| {
-        println!(
-            "Found function: {} at {}:{}",
-            target.name,
-            target.file_path.display(),
-            target.line
-        );
-    });
+    targets
+        .iter()
+        .flatten()
+        .for_each(|target| println!("{target}"));
 
     Ok(())
 }
